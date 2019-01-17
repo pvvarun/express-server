@@ -1,30 +1,24 @@
-function diamond(n)
-{   
-    let space="";
-    let star="";
-    for(let i=1;i<=n;i++){
-        for(let j=1;j<=n;j++){
-            if(j<=n-i)
-                space=space+" ";
-            else
-                star=star+"* ";
-        }
-        console.log(space,star);
-        star="";
-        space="";
+function diamond(n) {
+  let space="";
+  let star="";
+  for(let i = 1;i < 2*n;i++) {
+    for(let j = 1;j <= n;j++) {
+	    if(i <= n) {
+        if(j<=n-i)
+          space=space+" ";
+        else
+          star=star+"* ";
+      }
+	    if(i>n) {
+        if(j<=i-n)
+          space=space+" ";
+        else
+          star=star+"* ";
+      }
     }
-    for(let i=1;i<=n;i++){
-        for(let j=1;j<=n;j++){
-            if(j<=n-i)
-                star=star+"* ";
-            else
-                space=space+" ";
-        }
-        console.log(space,star);
-        star="";
-        space="";
-    }
+    console.log(space,star);
+    star="";
+    space="";
+  }
 }
-diamond(5);
-
-    
+diamond(6);

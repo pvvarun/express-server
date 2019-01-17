@@ -1,5 +1,5 @@
 
-function triangle(n){   
+function triangle(n){
     let space="";
     let star="";
     for(let i=1;i<=n;i++){
