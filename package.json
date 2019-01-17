@@ -1,0 +1,13 @@
+{
+  "name": "pattern",
+  "version": "1.0.0",
+  "description": "patterns",
+  "main": "index.js",
+  "scripts": {
+    "printDiamond":"nodemon extras/pattern/diamond.js",
+    "printTriangle":"nodemon extras/pattern/triangle.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Varun",
+  "license": "ISC"
+}
