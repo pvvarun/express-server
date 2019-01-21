@@ -4,10 +4,13 @@
   "description": "patterns",
   "main": "index.js",
   "scripts": {
-    "printDiamond":"nodemon extras/pattern/diamond.js",
-    "printTriangle":"nodemon extras/pattern/triangle.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "babel-node extras --presets env"
   },
   "author": "Varun",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
 }

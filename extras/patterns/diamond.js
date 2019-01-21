@@ -1,4 +1,4 @@
-function diamond(n) {
+export default function diamond(n) {
   let space="";
   let star="";
   for(let i = 1;i < 2*n;i++) {
@@ -21,4 +21,4 @@ function diamond(n) {
     space="";
   }
 }
-diamond(6);
+// diamond(6);
