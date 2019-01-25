@@ -1,6 +1,7 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import { errorHandler , notFoundRoutes } from './index';
+import mainRouter from './router'
 class Server {
   private app: express.Express;
   constructor(private portNumber) {
@@ -23,7 +24,8 @@ class Server {
     const { app } = this;
     app.use('/abc',(req,res) => {
       res.send("I am Ok");
-    })
+    });
+    app.use('/api',mainRouter);
     app.use(notFoundRoutes);
     app.use(errorHandler);
   }
