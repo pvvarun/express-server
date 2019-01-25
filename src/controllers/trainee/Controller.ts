@@ -24,9 +24,6 @@ class TraineeController {
       if(!id) {
         return res.status(400).send("id is missing");
       }
-      if(!status) {
-        return res.status(400).send("status is missing");
-      }
     }
     const data = [
       {
