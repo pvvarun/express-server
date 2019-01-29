@@ -3,9 +3,9 @@ import controller from './Controller';
 import validateHandler from './../../libs/routes/validateHandler'
 import validaterObject  from './validate'
 const traineeRouter : Router = Router();
-traineeRouter.get('/', controller.read1);
-traineeRouter.post('/', validateHandler(validaterObject.create), controller.read2);
-traineeRouter.put('/', controller.read3);
-traineeRouter.delete('/:id', controller.read4);
+traineeRouter.get('/?', validateHandler(validaterObject.get), controller.read);
+traineeRouter.post('/', validateHandler(validaterObject.create), controller.create);
+traineeRouter.put('/', validateHandler(validaterObject.update), controller.update);
+traineeRouter.delete('/:id',validateHandler(validaterObject.delete), controller.delete);
 
 export default traineeRouter;

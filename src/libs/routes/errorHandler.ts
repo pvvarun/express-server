@@ -1,15 +1,16 @@
 import { IDisplay } from './../../config/IConfig';
 export default function errorHandler ( err,req,res,next ) {
-  const errorKey = (err && err.error) || "notFound";
+  const errorKey = (err && (err.errorCode || err.error)) || "notFound";
+  const errorStatus = (err && err.statusCode) || 500;
   const errMessage = {
     notFound: "Not Found",
     unauthorized: "You are not allowed to access this URL",
   };
   const display : IDisplay = {
-    error: errMessage[errorKey],
+    error: errorKey,
     message: "error",
-    status: 500,
+    status: errorStatus,
     timestamp: new Date()
   }
-  res.send(display);
+  res.status(errorStatus).send(display);
 }
