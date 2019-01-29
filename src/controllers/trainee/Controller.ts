@@ -10,24 +10,13 @@ class TraineeController {
       return TraineeController.instance;
     }
   }
-  read1(req,res) {
+  read(req,res) {
     const data = null;
     res.status(200).send(successHandler("Trainee details are:", data));
   }
 
-  read2(req,res) {
-    const { name, id, status } = req.body;
-    if(!name) {
-        return res.status(400).send("Name is mandatory");
-    }
-    else {
-      if(!id) {
-        return res.status(400).send("id is missing");
-      }
-      if(!status) {
-        return res.status(400).send("status is missing");
-      }
-    }
+  create(req,res) {
+    const { name, id, } = req.body;
     const data = [
       {
         name: name,
@@ -39,8 +28,9 @@ class TraineeController {
     res.status(200).send(successHandler("New Trainee : ",data));
   }
 
-  read3(req,res) {
-    const { name, id, status } = req.body;
+  update(req,res) {
+    const { id } = req.body;
+    const { name , status} = req.body.dataToUpdate;
     const data = [
       {
         name: name,
@@ -51,10 +41,9 @@ class TraineeController {
     ]
     res.status(200).send(successHandler("Trainee Details Updated",data));
   }
-  read4(req,res)
+  delete(req,res)
   {
     const id = req.params.id;
-    console.log(id);
     const data = [
       {
         name: "",
