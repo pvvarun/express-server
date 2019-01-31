@@ -1,5 +1,6 @@
 export default interface IConfig {
   port : string;
+  mongoURL : string;
 }
 export interface IDisplay {
   error: string
