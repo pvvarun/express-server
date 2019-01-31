@@ -2,7 +2,6 @@ import {Request, Response, NextFunction} from 'express';
 
 export default function validateHandler(config:any) {
   return function(req:Request, res:Response, next:NextFunction) {
-    console.log("inside validateHandler");
     Object.keys(config).forEach((key) => {
       const property = { ... config[key] };
       if(!property) {
