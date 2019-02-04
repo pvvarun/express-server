@@ -7,7 +7,6 @@ const { key } = portNumber;
 export default function authMiddleWare( module:string , permissionType:string ) {
   return function workAuthMiddleWare(req : Request, res : Response, next : NextFunction ) {
   const token = req.headers.token;
-  console.log(token);
   const decoded = jwt.verify(token, key);
   const { role } = decoded;
   const errMessage = (`Unauthorized access`);
