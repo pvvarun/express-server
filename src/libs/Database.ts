@@ -1,5 +1,6 @@
 import * as mongoose from 'mongoose'
 import { disconnect } from 'cluster';
+import seedData from './seedData'
 export default class Database {
   static open(mongoURL : string ) {
     const options = {
@@ -23,6 +24,7 @@ export default class Database {
         }
         resolve();
         console.log("successfully connected by mongoose");
+        seedData();
       })
 
     });

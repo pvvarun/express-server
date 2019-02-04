@@ -4,9 +4,9 @@ import validateHandler from './../../libs/routes/validateHandler'
 import validaterObject  from './validate'
 import authMiddleWare from '../../libs/routes/authMiddleWare'
 const traineeRouter : Router = Router();
-traineeRouter.get('/?',authMiddleWare("getUsers1","delete") , validateHandler(validaterObject.get), controller.read);
-traineeRouter.post('/', validateHandler(validaterObject.create), controller.create);
-traineeRouter.put('/', validateHandler(validaterObject.update), controller.update);
-traineeRouter.delete('/:id',validateHandler(validaterObject.delete), controller.delete);
+traineeRouter.get('/?',authMiddleWare("getUsers1","read") , validateHandler(validaterObject.get), controller.read);
+traineeRouter.post('/',authMiddleWare("getUsers1","read") , validateHandler(validaterObject.create), controller.create);
+traineeRouter.put('/',authMiddleWare("getUsers1","read") , validateHandler(validaterObject.update), controller.update);
+traineeRouter.delete('/:id',authMiddleWare("getUsers1","read") ,validateHandler(validaterObject.delete), controller.delete);
 
 export default traineeRouter;
