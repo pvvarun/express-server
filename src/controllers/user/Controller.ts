@@ -10,8 +10,8 @@ class UserController {
     }
   }
   read(req, res) {
-    const data = null;
-    res.status(200).send(successHandler("User details are:", data));
+    const showData = req.body.newData;
+    res.send(showData);
   }
 
   create(req, res) {

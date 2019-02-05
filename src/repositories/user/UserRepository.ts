@@ -2,7 +2,11 @@ import userModel from './UserModel';
 import * as mongoose from 'mongoose';
 
 export default class UserRepository {
+  public static generateObject() {
+    return String(mongoose.Types.ObjectId());
+  }
   create(data) {
+    data._id = UserRepository.generateObject();
       const user = userModel.create(data,(err) => {
       if (err) {
         throw (err);
@@ -14,16 +18,7 @@ export default class UserRepository {
     return user;
   }
   read( readData ) {
-
-    const user = userModel.find( (err) => {
-      if (err) {
-        throw (err);
-      }
-      else {
-        console.log("read  successfully");
-      }
-    })
-    return user;
+    return userModel.findOne(readData);
   }
   count() {
     return userModel.countDocuments();
