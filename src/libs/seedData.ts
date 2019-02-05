@@ -19,8 +19,5 @@ export default function seedData() {
       }
       seedData.create(trainee2);
     }
-    else {
-      console.log(" No seed data Required");
-    }
   });
 }

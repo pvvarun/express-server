@@ -14,6 +14,7 @@ import * as mongoose from 'mongoose';
 //}
 const userSchema  = new mongoose.Schema(
   {
+    _id: String,
     name : String,
     id : String,
     email: String,
