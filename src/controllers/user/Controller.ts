@@ -1,7 +1,11 @@
-import { Router, Request, Response, NextFunction } from "express";
-import successHandler from "../../libs/routes/successHandler";
+import * as bcrypt from 'bcrypt';
+import { NextFunction, Request, Response, Router } from 'express';
+import * as jwt from 'jsonwebtoken';
+import portNumber from '../../config/configuration';
+import successHandler from '../../libs/routes/successHandler';
+import UserRepository from './../../repositories/user/UserRepository';
+
 class UserController {
-  private static instance: UserController;
   public static createInstance() {
     if (!UserController.instance) {
       return (UserController.instance = new UserController());
@@ -9,45 +13,71 @@ class UserController {
       return UserController.instance;
     }
   }
-  read(req, res) {
+  private static instance: UserController;
+
+  public read(req, res) {
     const showData = req.body.newData;
     res.send(showData);
   }
 
-  create(req, res) {
+  public create(req: Request, res: Response) {
     const { name, id } = req.body;
     const data = [
       {
-        name: name,
-        id: id,
-        maritalStatus: status
-      }
+        id,
+        maritalStatus: 'Married',
+        name,
+      },
     ];
-    res.status(200).send(successHandler("New User : ", data));
+    // console.log('data--', data);
+    res.status(200).send(successHandler('New User : ', data));
   }
 
-  update(req, res) {
+  public update(req, res) {
     const { id } = req.body;
     const { name, status } = req.body.dataToUpdate;
     const data = [
       {
-        name: name,
-        id: id,
-        maritalStatus: status
-      }
+        id,
+        maritalStatus: status,
+        name,
+      },
     ];
-    res.status(200).send(successHandler("User Details Updated", data));
+    res.status(200).send(successHandler('User Details Updated', data));
   }
-  delete(req, res) {
+  public delete(req, res) {
     const id = req.params.id;
     const data = [
       {
-        name: "",
-        id: id,
-        maritalStatus: null
-      }
+        id,
+        maritalStatus: undefined,
+        name: '',
+      },
     ];
-    res.status(200).send(successHandler("User id deleted", data));
+    res.status(200).send(successHandler('User id deleted', data));
   }
+  public async login(req, res) {
+    const findData = new UserRepository();
+    const { key } = portNumber;
+    const {id, password} = req.body;
+    const document = await findData.read({ _id: id });
+    if (!document) {
+      const errMessage = 'No document found in database';
+      throw ({ error: errMessage, statusCode: 404 });
+    }
+    else {
+    console.log('after finding document----', document);
+    const result = await bcrypt.compare(password, document.hashedPassword);
+    console.log(result);
+    if (result) {
+    const token = jwt.sign({ document }, key, { expiresIn: 15 * 60 });
+    res.send(token);
+    }
+    else {
+      const errMessage = 'Wrong Password!! Please enter id and password again';
+      throw ({ error: errMessage, statusCode: 404 });
+    }
+  }
+}
 }
 export default UserController.createInstance();

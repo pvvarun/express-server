@@ -1,5 +1,13 @@
 import * as mongoose from 'mongoose';
+import IUserModel from './IUserModel';
 import UserSchema from './UserSchema';
-const { baseSchema } =  this ;
-const userModel = mongoose.model('userModel', UserSchema);
-export default userModel;
+
+export const userSchema = new UserSchema( {
+  collection: 'userAgain',
+});
+export const userModel: mongoose.Model<IUserModel> = mongoose.model<IUserModel>(
+  'userAgain',
+  userSchema,
+  'userAgain',
+  true,
+);

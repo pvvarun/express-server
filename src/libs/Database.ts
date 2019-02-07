@@ -1,37 +1,37 @@
-import * as mongoose from 'mongoose'
 import { disconnect } from 'cluster';
-import seedData from './seedData'
+import * as mongoose from 'mongoose';
+import seedData from './seedData';
 export default class Database {
-  static open(mongoURL : string ) {
+  public static open(mongoURL: string ) {
     const options = {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
       autoIndex: false, // Don't build indexes
-      reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
-      reconnectInterval: 500, // Reconnect every 500ms
-      poolSize: 10, // Maintain up to 10 socket connections
-      // If not connected, return errors immediately rather than waiting for reconnect
       bufferMaxEntries: 0,
       connectTimeoutMS: 10000, // Give up initial connection after 10 seconds
+      family: 4, // Use IPv4, skip trying IPv6
+      poolSize: 10, // Maintain up to 10 socket connections
+      // If not connected, return errors immediately rather than waiting for reconnect
+      reconnectInterval: 500, // Reconnect every 500ms
+      reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
       socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
-      family: 4 // Use IPv4, skip trying IPv6
+      useCreateIndex: true,
+      useFindAndModify: false,
+      useNewUrlParser: true,
     };
     const promise = new Promise((resolve, reject) => {
       mongoose.connect(mongoURL, options, (err) => {
-        if(err) {
+        if (err) {
           reject(err);
         }
         resolve();
-        console.log("successfully connected by mongoose");
+        console.log('successfully connected by mongoose');
         seedData();
-      })
+      });
 
     });
     return promise;
   }
-  disconnect() {
+  public disconnect() {
     mongoose.disconnect();
-    console.log("successfully disconnected");
+    console.log('successfully disconnected');
   }
 }

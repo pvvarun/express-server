@@ -1,11 +1,11 @@
-import { Router , Request , Response , NextFunction} from 'express'
-export default function  successHandler(message : string , data) {
+import { NextFunction, Request, Response, Router } from 'express';
+export default function successHandler(message: string, datas) {
   return {
-    message: message || "no message",
-    data: data || {
-      name : "Varun",
+    data: datas || {
       id: 2444,
-      maritalStatus: "Unmarried"
-    }
-  }
+      maritalStatus: 'Unmarried',
+      name: 'Varun',
+    },
+    message: message || 'no message',
+  };
 }
