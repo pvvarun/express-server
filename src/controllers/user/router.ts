@@ -6,25 +6,25 @@ import validaterObject from './validate';
 const userRouter: Router = Router();
 userRouter.get(
   '/?',
-  authMiddleWare('getUsers1', 'read'),
+  authMiddleWare('getUsers', 'read'),
   validateHandler(validaterObject.get),
   controller.read,
 );
 userRouter.post(
   '/',
-  authMiddleWare('getUsers1', 'create'),
+  authMiddleWare('getUsers', 'create'),
   validateHandler(validaterObject.create),
   controller.create,
 );
 userRouter.put(
   '/',
-  authMiddleWare('getUsers1', 'read'),
+  authMiddleWare('getUsers', 'update'),
   validateHandler(validaterObject.update),
   controller.update,
 );
 userRouter.delete(
   '/:id',
-  authMiddleWare('getUsers1', 'read'),
+  authMiddleWare('getUsers', 'delete'),
   validateHandler(validaterObject.delete),
   controller.delete,
 );

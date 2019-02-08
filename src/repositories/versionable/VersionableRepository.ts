@@ -8,16 +8,14 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
   constructor(userModel) {
     this.model = userModel;
   }
-  public createDOC(data): Promise<D> {
+  public async createDOC(originalData) {
+    const data = Object.assign({}, originalData);
     data._id = VersionableRepository.generateObject();
-    const user = this.model.create(data, (err) => {
-      if (err) {
-        throw (err);
-      }
-      else {
-        console.log('reation successfully');
-      }
-    });
+    data.original_Id = data._id;
+    data.createdAt = Date.now();
+    console.log('data---->', data);
+
+    const user = await this.model.create(data);
     return user;
   }
 
@@ -28,7 +26,26 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
       }
     });
   }
-  // public count(): mongoose.Promise<D> {
-  //   return this.model.countDocuments();
-  // },
-};
+
+  public async updateDocument(originalData, dataToBeAdded) {
+    const obj = { ...originalData, ...dataToBeAdded};
+    console.log ('original data is---------', obj);
+    const newObj = await this.createDOC({...obj});
+    console.log(' updateDocument is-----------', newObj );
+    const updateDocument = await this.model.updateOne
+    ({original_Id: originalData.original_Id , deletedAt: {$exists: false}}, {deletedAt: true });
+    const newnewObj = await this.model.updateOne
+    ({_id: newObj._id , deletedAt: {$exists: false}}, {original_Id: originalData.original_Id  });
+    console.log(' updateDocument after further updates is-----------', updateDocument );
+    return newnewObj;
+  }
+
+  public async deleteDoc(id) {
+    const deleteResult = await this.model.updateOne
+    ({ _id: id,  deletedAt: {$exists: false}}, {deletedAt: true });
+    console.log(' deletedoc is-------', deleteResult);
+    if (!deleteResult) {
+      throw ({ error: 'user does not exist ', status: 403});
+    }
+  }
+}

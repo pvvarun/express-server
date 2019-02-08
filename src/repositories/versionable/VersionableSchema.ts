@@ -12,7 +12,7 @@ export default class VersionableSchema extends mongoose.Schema {
         type: String,
       },
       original_Id : {
-        required: false,
+        required: true,
         type: String,
       },
     };

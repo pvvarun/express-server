@@ -20,17 +20,24 @@ export default function authMiddleWare(module: string, permissionType: string) {
     const findData = new UserRepository();
     findData.read({ _id: id })
     .then((data) => {
-      console.log('data is ----find---', data);
+      console.log('id--', id);
+      console.log('data--', data);
+      if (!data) {
+        return next({ error: 'no record found', status: 402 });
+      }
       const { role } = data;
+      console.log('role is-------------', role);
       const check = hasPermissions(module, role, permissionType);
+      console.log('check is--------------', check);
       if (!check) {
-        next({ err: 'dont permision' , status: 200 } );
+        return next({ error: 'dont permision' , status: 403 } );
       }
       req.body.newData = data;
       next();
     })
     .catch((err) => {
       console.log('error in find query ----', err);
+      return next(err);
     });
   };
 }

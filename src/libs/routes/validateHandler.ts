@@ -43,9 +43,11 @@ export default (config: any) =>
           errMessage = `Invalid characters `;
           throw ({ error: errMessage, statusCode: 402 });
         }
+
         if (property.custom) {
           const resp = property.custom(value);
           if (!resp) {
+            console.log('inside custom-----------');
             throw ({ error: 'Validation failed for custom function', statusCode: 402 });
           }
         }
