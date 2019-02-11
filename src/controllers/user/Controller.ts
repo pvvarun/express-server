@@ -21,40 +21,40 @@ class UserController {
   }
 
   public create(req: Request, res: Response) {
-    const { name, id } = req.body;
+    const createData = new UserRepository();
+    const { name, id, role, email } = req.body;
+    createData.create({ name, role, email });
     const data = [
       {
         id,
-        maritalStatus: 'Married',
+        // maritalStatus: 'Married',
         name,
       },
     ];
     // console.log('data--', data);
-    res.status(200).send(successHandler('New User : ', data));
+    res.status(200).send(successHandler('New User created successfully : ', data));
   }
 
-  public update(req, res) {
+  public async update(req, res, next) {
     const { id } = req.body;
-    const { name, status } = req.body.dataToUpdate;
-    const data = [
-      {
-        id,
-        maritalStatus: status,
-        name,
-      },
-    ];
-    res.status(200).send(successHandler('User Details Updated', data));
+    const findData = new UserRepository();
+    findData.read({ _id: id, deletedAt: {$exists: false} }).lean()
+    .then(async (data) => {
+      console.log('id--', id);
+      console.log('data--', data);
+      if (!data) {
+        return next({ error: 'no record found to be updated', status: 402 });
+      }
+      const finalData = await findData.updateDocument( data, req.body.dataToUpdate);
+      res.status(200).send(successHandler('User Details Updated', finalData));
+    });
   }
-  public delete(req, res) {
+  public async delete(req, res) {
     const id = req.params.id;
-    const data = [
-      {
-        id,
-        maritalStatus: undefined,
-        name: '',
-      },
-    ];
-    res.status(200).send(successHandler('User id deleted', data));
+    console.log(id);
+    const findData = new UserRepository();
+    const deletedData = await findData.deleteDoc(id);
+    res.status(200).send(successHandler('User is deleted', deletedData));
   }
   public async login(req, res) {
     const findData = new UserRepository();

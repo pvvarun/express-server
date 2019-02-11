@@ -20,7 +20,7 @@ const validaterObject = {
     id: {
       errorMessage: 'Id is required',
       in: ['params'],
-      regex: '[A-Z][a-zA-Z][^#&<>\"~;$^%{}?0-9]{1,20}$',
+      // regex: '[A-Z][a-zA-Z][^#&<>\"~;$^%{}?0-9]{1,20}$',
       required: true,
     },
   },
@@ -42,9 +42,9 @@ const validaterObject = {
   },
   update: {
     dataToUpdate: {
-      custom: (dataToUpdate) => {
-        throw ({ error: 'Error Occured', statusCode: 200 });
-      },
+    //   custom: (dataToUpdate) => {
+    //     throw ({ error: 'Error Occurred inside custom', statusCode: 200 });
+    // },
       in: ['body'],
       isObject: true,
       required: true,

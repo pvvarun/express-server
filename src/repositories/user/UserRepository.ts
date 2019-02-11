@@ -11,9 +11,9 @@ export default class UserRepository extends VersionableRepository<IUserModel, mo
     return this.createDOC(data);
   }
   public read(readData): any {
-    console.log(' iside the find data---------');
+    console.log(' inside the find data---------');
     const data = this.model.findOne(readData);
-    //console.log(data);
+    // console.log(data);
     return data;
   }
   public count(): any {
