@@ -1,57 +1,59 @@
 const validaterObject = {
   create: {
-    name: {
-      required: true,
-      regex: '[A-Z][a-zA-Z][^#&<>\"~;$^%{}?0-9]{1,20}$',
-      in: ['body'],
-      errorMessage: 'Name is required',
+    id: {
+      custom: (value) => {
+        console.log('Value', value);
+        return true;
       },
-  id: {
-  required: true,
-  string: true,
-  in:['body'],
-  custom: function(value) {
-  console.log('Value', value);
-  throw { error: 'Error Occured', statusCode : 200 }
-  }
-  }
+      in: ['body'],
+      required: true,
+      string: true,
+    },
+    name: {
+      errorMessage: 'Name is required',
+      in: ['body'],
+      regex: '[A-Z][a-zA-Z][^#&<>\"~;$^%{}?0-9]{1,20}$',
+      required: true,
+    },
   },
   delete: {
-  id: {
-  required: true,
-  regex: '[A-Z][a-zA-Z][^#&<>\"~;$^%{}?0-9]{1,20}$',
-  errorMessage: 'Id is required',
-  in: ['params']
-  }
+    id: {
+      errorMessage: 'Id is required',
+      in: ['params'],
+      regex: '[A-Z][a-zA-Z][^#&<>\"~;$^%{}?0-9]{1,20}$',
+      required: true,
+    },
   },
   get: {
-  skip: {
-  required: false,
-  default: 0,
-  number: true,
-  in: ['query'],
-  errorMessage: 'Skip is invalid',
-  },
-  limit: {
-  required: false,
-  default: 10,
-  number: true,
-  in: ['query'],
-  errorMessage: 'Limit is invalid',
-  }
+    limit: {
+      default: 10,
+      errorMessage: 'Limit is invalid',
+      in: ['query'],
+      number: true,
+      required: false,
+    },
+    skip: {
+      default: 0,
+      errorMessage: 'Skip is invalid',
+      in: ['query'],
+      number: true,
+      required: false,
+    },
   },
   update: {
-      id: {
-          required: true,
-          string: true,
-          in:['body']
+    dataToUpdate: {
+      custom: (dataToUpdate) => {
+        throw ({ error: 'Error Occured', statusCode: 200 });
       },
-      dataToUpdate: {
-          in: ['body'],
-          required: true,
-          isObject: true,
-          custom: function(dataToUpdate) {},
-      }
-  }
-}
+      in: ['body'],
+      isObject: true,
+      required: true,
+    },
+    id: {
+      in: ['body'],
+      required: true,
+      string: true,
+    },
+    },
+  };
 export default validaterObject;

@@ -1,1 +1,1 @@
-import traineeRouter from './router'
+import traineeRouter from './router';
